@@ -1,0 +1,18 @@
+{
+  "name": "ScanCamera",
+  "version": "0.0.0",
+  "description": "Wrapper for easier use of the scan camera prototype",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fhacktory/scan-me.git"
+  },
+  "author": "Gaël \"Gruck\" Motte",
+  "license": "MIT",
+  "dependencies": {
+    "express": "~4.12.3"
+  }
+}

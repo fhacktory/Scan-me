@@ -1,4 +1,4 @@
-var express = require('express')
+var express = require('express');
 var fs = require('fs');
 var cameralogic = require('./cameralogic');
 
@@ -20,13 +20,6 @@ var server = app.listen(3000, function () {
 app.use(express.static('public'));
 app.use(express.static('pictures'));
 app.use(express.static('raw'));
-
-
-
-
-
-
-
 
 
 // respond with "Hello World!" on the homepage

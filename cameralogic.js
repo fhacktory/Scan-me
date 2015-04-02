@@ -49,8 +49,6 @@ function scan(definition){
       })
 
 
-
-
     scanProcess.on('close', function(code,signal){
       console.log("scan done");
 

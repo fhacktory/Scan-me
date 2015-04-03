@@ -1,16 +1,54 @@
 var fs = require('fs');
+var mkdirp = require('mkdirp');
 var spawn = require('child_process').spawn;
 
 var cameraInUse = false;
-var clickNB = 0;
+var clickNB = -1;
 
 
-//TODO : init the clickNB by reading the file list 
 
 exports.LD = 100;
 exports.SD = 300;
 exports.HD = 600;
 exports.UHD = 1200;
+
+
+//is directory missing ?
+var stats = fs.lstatSync('./raw');
+if (!stats.isDirectory()) {
+  mkdirp('./raw', function(err) { 
+    console.log ('created missing raw folder');
+  });
+}
+
+var stats = fs.lstatSync('./pictures');
+if (!stats.isDirectory()) {
+  mkdirp('./pictures', function(err) { 
+    console.log ('created missing pictures folder');
+  });
+}
+
+//get the current clickNB
+console.log('trying to determine clickNB');
+fs.readdir( './raw', function(err, list) {
+  if(err)
+      throw err;
+  var regex = new RegExp("img(\\d+)\.tiff");
+  list.forEach( function(item) {
+    var matches = item.match(regex);
+    if( matches ) {
+      if(matches[1] > clickNB){
+        clickNB =  parseInt(matches[1]) + 1 ;
+        console.log('found photo for click : ' + matches[1]);
+      }
+    }else{
+      console.log(matches);
+    }
+
+  }); 
+});
+
+
 
 
 
@@ -40,7 +78,7 @@ function scan(definition){
 
     scanProcess.stdout.on('data', function(data){
       fs.appendFile('./raw/img'+imageIndex+'.tiff', data, function(){
-        console.log(''+data);
+        console.log('worte chunk');
       })
     });
 
@@ -67,12 +105,7 @@ function scan(definition){
         cameraInUse = false;
 
       });
-
-
     });
-
-    
-
 
 		return true;
 	}else{
@@ -80,9 +113,5 @@ function scan(definition){
 		return false;
 	}
 
-
-}
-
-function jpgFromRaw(image){
 
 }
